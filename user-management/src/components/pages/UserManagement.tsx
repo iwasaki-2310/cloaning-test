@@ -1,11 +1,15 @@
-import { Box, Center, Image, Spinner, Stack, Text, Wrap, WrapItem } from '@chakra-ui/react'
-import { FC, memo, useEffect } from 'react'
+import { Center, Spinner, Wrap, WrapItem, useDisclosure } from '@chakra-ui/react'
+import { FC, memo, useCallback, useEffect } from 'react'
 import { UserCard } from '../organisms/user/UserCard'
 import { useAllUsers } from '../../hooks/useAllUsers'
+import { UserDetailModal } from '../organisms/user/UserDetailModal'
 
 export const UserManagement: FC = memo(() => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const { getUsers, loading, users } = useAllUsers()
   useEffect(() => getUsers(), [])
+
+  const onClickUser = useCallback(() => onOpen(), [])
   return (
     <>
       {loading ? (
@@ -20,11 +24,13 @@ export const UserManagement: FC = memo(() => {
                 imageUrl="https://www.livefreely2310.com/my-family/wp-content/uploads/2023/04/%E7%B5%90%E5%A9%9A%E5%BC%8F.jpg"
                 userName={user.username}
                 fullName={user.name}
+                onClick={onClickUser}
               />
             </WrapItem>
           ))}
         </Wrap>
       )}
+      <UserDetailModal isOpen={isOpen} onClose={onClose} />
     </>
   )
 })
