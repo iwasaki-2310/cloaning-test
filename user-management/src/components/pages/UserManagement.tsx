@@ -12,7 +12,7 @@ export const UserManagement: FC = memo(() => {
   const { onSelectUser, selectedUser } = useSelectUser()
   const { loginUser } = useLoginUser()
 
-  console.log(loginUser?.id)
+  // console.log(loginUser?.isAdmin)
 
   useEffect(() => getUsers(), [])
 
@@ -22,6 +22,7 @@ export const UserManagement: FC = memo(() => {
     },
     [users, onSelectUser, onOpen]
   )
+
   return (
     <>
       {loading ? (
